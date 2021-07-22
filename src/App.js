@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {fetchData} from "./actions/actions";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const Spinner = () => {
+    return <div>Loading ...</div>
 }
 
-export default App;
+const App = ({isLoading, dispatch,data }) => {
+
+    useEffect(() => {
+        console.log("data")
+        console.log(data)
+    }, [data])
+
+    const _onLoadData = () => {
+        dispatch(fetchData('/api/data'))
+    }
+
+    return (
+        <div>
+            <button onClick={_onLoadData}>Load data</button>
+            <div className='container'>
+                {isLoading ? <Spinner/> : <div/>}
+            </div>
+            <div>
+                {JSON.stringify(data)}
+            </div>
+        </div>
+    );
+}
+
+const mapStateToProps = (state) => ({
+    isLoading: state.myReducer.isLoading,
+    data: state.myReducer.data,
+})
+
+export default connect(mapStateToProps)(App);
