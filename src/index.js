@@ -1,11 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import configureStore from './store';
 import {fetchData} from './actions/actions';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import HomePage from "./pages/home";
+import DetailsPage from "./pages/details";
 
 const store = configureStore();
 
@@ -16,7 +23,26 @@ function loadData() {
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
-            <App />
+            <Router>
+                <div>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                    </ul>
+
+                    <hr />
+
+                    <Switch>
+                        <Route exact path="/">
+                            <HomePage />
+                        </Route>
+                        <Route path="/details">
+                            <DetailsPage />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
         </React.StrictMode>
     </Provider>,
     document.getElementById('root')

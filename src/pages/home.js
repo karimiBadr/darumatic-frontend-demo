@@ -1,16 +1,19 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {fetchData} from "./actions/actions";
+import {fetchData} from "../actions/actions";
+import { useHistory } from "react-router-dom";
 
 const Spinner = () => {
     return <div>Loading ...</div>
 }
 
-const App = ({isLoading, dispatch,data }) => {
+const HomePage = ({isLoading, dispatch,data }) => {
+    let history = useHistory();
 
     useEffect(() => {
-        console.log("data")
-        console.log(data)
+        if(data !== undefined && data !== null){
+            history.push("/details");
+        }
     }, [data])
 
     const _onLoadData = () => {
@@ -35,4 +38,4 @@ const mapStateToProps = (state) => ({
     data: state.myReducer.data,
 })
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(HomePage);

@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 
 function MyReducer(state = {
                             isLoading: false,
-                            data: [],
+                            data: undefined,
                             error: false}
     , action = null) {
     switch(action.type) {
